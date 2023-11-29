@@ -1,0 +1,41 @@
+{{#if products.length}}
+  
+  {{#each products as |product|}}
+    <ul>
+      <li>Product ID :{{_id}}</li>
+      <li>{{name}}</li>
+      <li>{{description}}</li>
+      <li>{{stock}} units</li>
+      <li>$ {{price}}</li>
+
+    </ul>
+
+    <div>
+          <button onclick="location.href="/{{product._id}}"">Add to cart</button>
+        </div>
+  {{/each}}
+{{else}}
+  <p>No products available</p>
+
+{{/if}}
+
+<div>
+  {{#if hasPrevPage}}
+    <p><a href="{{prevLink}}">Prev</a></p>
+
+  {{/if}}
+  <span>{{currentPage}}</span></li>
+  {{#if hasNextPage}}
+    <p><a href="{{nextLink}}">Next</a></p>
+  {{/if}}
+{{!-- {{/if}} --}}
+</div>
+<button onclick="location.href='/users/profile'">Back to your profile!!</button>
+<button onclick="location.href='/users/logout'">Logout</button>
+
+{{! <script src="/socket.io/socket.io.js"></script> }}
+<script src="products.js">
+addToCart ()
+
+</script>
+

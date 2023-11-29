@@ -1,0 +1,20 @@
+<ul>
+  {{#if items.length}}
+    {{#each items as |item|}}
+      <li class="productCard">
+        <div>
+          <h1 class="title">{{item.product.title}}</h1>
+          <p class="description">{{item.product.description}}</p>
+          <p>Unit Price: <b>${{item.product.price}}</b></p>
+
+        </div>
+        <div>
+          <p>Quantity: <b>{{item.quantity}}</b></p>
+          <p>Total Price: <b>${{item.totalPrice}}</b></p>
+        </div>
+      </li>
+    {{/each}}
+  {{else}}
+    <h2>The cart is empty!</h2>
+  {{/if}}
+</ul>

@@ -1,0 +1,59 @@
+components:
+  parameters:
+    schemas:
+      ProductSpecs:
+        type: object
+        required:
+          - name
+          - description
+          - price
+          - stock
+        properties:
+          nameProd: 
+            type: string
+            description: Nombre del producto
+          description: 
+            type: string
+            description: Descripcion del producto
+          price: 
+            type: number
+            description: Precio del producto
+          stock: 
+            type: number
+            description: Cantidad disponible del producto
+        example:
+          nameProd: Bebida 1.5lt
+          description: Este producto contiene muchas ventajas a su competencia
+          price : 1000
+          stock: 500
+      UserSpecs:
+        type : object
+        required:
+          - first_name
+          - last_name
+          - email
+          - age
+          - password
+          - role       
+          - isGitHub
+        properties:
+          first_name:
+            type: string
+            description: Nombre del usuario
+          last_name:
+            type: string
+            description: Apellido del usuario
+          email:
+            type: string
+            description: Correo Electronico del usuario
+          age:
+            type: number
+            description: Edad del usuario
+          password:
+            type: string
+            description: Password del usuario
+          role:
+            type: 
+
+            
+          

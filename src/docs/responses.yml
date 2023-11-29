@@ -1,0 +1,55 @@
+components:
+  parameters:
+    rundev:
+      name: Run development server
+      description: Run development
+      required: true
+
+    schemas:
+      Products:
+        registeredNew: 
+          type: object
+          properties:
+            nombre:
+              type: string
+              description: nombre del producto
+            precio:
+              type: number
+              description: precio del producto
+            disponibilidad:
+              type: number
+              description: disponibilidad del producto
+          example: 
+            nombre: Bebida 1.5lt
+            precio: 1000
+            disponibilidad: 500
+        getProducts:
+          type: array
+          items:
+              properties:
+                nombre:
+                  type: string
+                  description: nombre del producto
+                precio:
+                  type: number
+                  description: precio del producto
+                disponibilidad:
+                  type: number
+                  description: disponibilidad del producto
+              example: 
+                nombre: Bebida 1.5lt
+                precio: 1000
+                disponibilidad: 500
+        validationError:
+          type: object
+          items:
+              properties:
+                msg:
+                  type: string
+                  description: Mensaje de Error de validacion de esquema
+              example:
+                msg: Error de validacion de esquema
+        
+
+          
+          

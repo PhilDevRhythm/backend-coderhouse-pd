@@ -1,0 +1,12 @@
+[2023-10-09T14:58:46.151] [TRACE] default - Log Nivel 1
+[2023-10-09T14:58:46.153] [DEBUG] default - Error Debug Nivel 2
+[2023-10-09T14:58:46.153] [INFO] default - Error Info Nivel 3
+[2023-10-09T14:58:46.153] [WARN] default - Error Alerta Nivel 4
+[2023-10-09T14:58:46.153] [ERROR] default - Error grave Nivel 5
+[2023-10-09T14:58:46.153] [FATAL] default - Error Fatal Nivel 6
+[2023-10-09T15:03:11.008] [TRACE] default - Log Nivel 1
+[2023-10-09T15:03:11.010] [DEBUG] default - Error Debug Nivel 2
+[2023-10-09T15:03:11.011] [INFO] default - Error Info Nivel 3
+[2023-10-09T15:03:11.012] [WARN] default - Error Alerta Nivel 4
+[2023-10-09T15:03:11.013] [ERROR] default - Error grave Nivel 5
+[2023-10-09T15:03:11.013] [FATAL] default - Error Fatal Nivel 6

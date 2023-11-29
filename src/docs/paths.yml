@@ -1,0 +1,66 @@
+paths: 
+  /api/products:
+    post:
+      tags: 
+      - ProductsRegister
+      summary: Registro de producto
+      requestbody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/ProductSpecs'
+        required: true
+      responses:
+        200:
+          description:  Registro de productos exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/parameters/schemas/Products/registeredNew'
+        501:
+          description: Error de servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/parameters/schemas/Products/validationError'
+
+        404:
+          description: Error de schema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/parameters/schemas/Products/validationError'
+  /api/products/getProducts:              
+    get:
+      tags:
+      - getProducts
+      summary: Obtener productos
+      requestbody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/ProductSpecs'
+          required: true
+      responses:
+        201:
+          description:  Registro de productos exitosa, generará un id automatico e unico.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/parameters/schemas/Products/registeredNew'
+        502:
+          description: Error de servidor - Hubo una desconexion en el camino al producto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/parameters/schemas/Products/validationError'
+
+        404:
+          description: Error de schema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/parameters/schemas/Products/validationError'      
+
+    
+   
