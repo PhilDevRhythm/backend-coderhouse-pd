@@ -13,7 +13,7 @@ import { info } from "./docs/info.js";
 import swaggerUI from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 
-import helmet from "helmet";
+// import helmet from "helmet";
 
 import { loggerStart } from "./log4js.js";
 
@@ -25,13 +25,13 @@ import { userModel } from "./daos/mongodb/models/userModel.js";
 
 import cookieParser from "cookie-parser";
 import MongoStore from "connect-mongo";
-import userRouter from "./routes/userRouter.js";
+// import userRouter from "./routes/userRouter.js";
 
 import "dotenv/config";
 
 import session from "express-session";
-import validateLogin from "./middlewares/validateLogin.js";
-import isAdmin from "./middlewares/isAdmin.js";
+// import validateLogin from "./middlewares/validateLogin.js";
+// import isAdmin from "./middlewares/isAdmin.js";
 
 import morgan from "morgan";
 import "./daos/mongodb/connection.js";
@@ -48,8 +48,8 @@ const app = express();
 app.listen(8080, () => {
   console.log(`app is on 8080 pid: ${process.pid}`);
 });
-import cluster from "cluster";
-import { cpus } from "os";
+// import cluster from "cluster";
+// import { cpus } from "os";
 
 // SCALABILITY SETTINGS
 
@@ -98,6 +98,7 @@ app
   .use("/api", mainRouter.getRouter());
 
 // app STATUS
+// MONGO DB ATLAS
 
 import { MongoClient, ServerApiVersion } from "mongodb";
 
@@ -127,21 +128,21 @@ async function run() {
 }
 run().catch(console.dir);
 
-const mongoStoreOptions = {
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGO_LOCAL_URL,
-    crypto: {
-      secret: process.env.MONGO_LOCAL_SECRET,
-    },
-    reapInterval: 30,
-  }),
-  secret: process.env.MONGO_LOCAL_SECRET,
-  resave: false,
-  saveUninitilized: false,
-  cookie: {
-    maxAge: 120000,
-  },
-};
+// const mongoStoreOptions = {
+//   store: MongoStore.create({
+//     mongoUrl: process.env.MONGO_LOCAL_URL,
+//     crypto: {
+//       secret: process.env.MONGO_LOCAL_SECRET,
+//     },
+//     reapInterval: 30,
+//   }),
+//   secret: process.env.MONGO_LOCAL_SECRET,
+//   resave: false,
+//   saveUninitilized: false,
+//   cookie: {
+//     maxAge: 120000,
+//   },
+// };
 
 app
   .post("/dead", async (req, res) => {
@@ -170,7 +171,7 @@ app
 
   .use(cookieParser("secret"))
 
-  .use(session(mongoStoreOptions))
+  // .use(session(mongoStoreOptions))
 
   .use("/", viewsRouter);
 
