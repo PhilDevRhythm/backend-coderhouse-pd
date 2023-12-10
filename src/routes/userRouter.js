@@ -18,7 +18,11 @@ router.post("/api/users/register", registerUser);
 // router.post("/login", loginUser);
 
 // RUTA LOCAL
-router.post("/users/registerps", passport.authenticate("register"), registerResponse);
+router.post(
+  "/users/registerps",
+  passport.authenticate("register"),
+  registerResponse
+);
 // router.post("/login", passport.authenticate("login"), loginResponse);
 router.get("/private", (req, res) => res.send("route private"));
 
