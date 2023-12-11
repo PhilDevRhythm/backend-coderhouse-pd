@@ -1,9 +1,9 @@
 <div>
-  <h2>Welcome to your profile site {{first_name}} </h2>
+  <h2>Welcome to your profile site {{user.first_name}} </h2>
 
   <h1>Email registered:{{email}}</h1>
-  <h1>Age:{{age}}</h1>
+  <h1>Age:{{user.age}}</h1>
 
-  <button onclick="location.href='/products'">Go shopping!!</button>
-  <button onclick="location.href='/users/logout'">Logout</button>
+  <button onclick="location.href='/api/products'">Go shopping!!</button>
+  <button onclick="location.href='/api/users/logout'">Logout</button>
 </div>

@@ -30,8 +30,8 @@ import MongoStore from "connect-mongo";
 import "dotenv/config";
 
 import session from "express-session";
-// import validateLogin from "./middlewares/validateLogin.js";
-// import isAdmin from "./middlewares/isAdmin.js";
+import validateLogin from "./middlewares/validateLogin.js";
+import isAdmin from "./middlewares/isAdmin.js";
 
 import morgan from "morgan";
 import "./daos/mongodb/connection.js";
@@ -128,21 +128,21 @@ async function run() {
 }
 run().catch(console.dir);
 
-// const mongoStoreOptions = {
-//   store: MongoStore.create({
-//     mongoUrl: process.env.MONGO_LOCAL_URL,
-//     crypto: {
-//       secret: process.env.MONGO_LOCAL_SECRET,
-//     },
-//     reapInterval: 30,
-//   }),
-//   secret: process.env.MONGO_LOCAL_SECRET,
-//   resave: false,
-//   saveUninitilized: false,
-//   cookie: {
-//     maxAge: 120000,
-//   },
-// };
+const mongoStoreOptions = {
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_LOCAL_URL,
+    crypto: {
+      secret: process.env.MONGO_LOCAL_SECRET,
+    },
+    reapInterval: 30,
+  }),
+  secret: process.env.MONGO_LOCAL_SECRET,
+  resave: false,
+  saveUninitilized: false,
+  cookie: {
+    maxAge: 120000,
+  },
+};
 
 app
   .post("/dead", async (req, res) => {
@@ -171,25 +171,25 @@ app
 
   .use(cookieParser("secret"))
 
-  // .use(session(mongoStoreOptions))
+  .use(session(mongoStoreOptions))
 
   .use("/", viewsRouter);
 
-// app.get("/dashboard", validateLogin, (req, res) => {
-//   req.session.info.count++;
-//   res.json({
-//     msg: "Bienvenido",
-//     session: req.session,
-//   });
-// });
+app.get("/dashboard", validateLogin, (req, res) => {
+  req.session.info.count++;
+  res.json({
+    msg: "Bienvenido",
+    session: req.session,
+  });
+});
 
-// app.get("/admin-dashboard", validateLogin, isAdmin, (req, res) => {
-//   req.session.info.count++;
-//   res.json({
-//     msg: "Bienvenido Admin ",
-//     session: req.session,
-//   });
-// });
+app.get("/admin-dashboard", validateLogin, isAdmin, (req, res) => {
+  req.session.info.count++;
+  res.json({
+    msg: "Bienvenido Admin ",
+    session: req.session,
+  });
+});
 
 app.post("/logout", (req, res) => {
   req.session.destroy();
@@ -207,7 +207,7 @@ app.post("/logout", (req, res) => {
 const sessionConfig = {
   secret: "secret",
   cookie: { maxAge: 10000 },
-  saveUninitilized: true,
+  saveUninitilized: false,
   resave: false,
 };
 

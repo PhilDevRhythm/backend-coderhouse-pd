@@ -1,14 +1,15 @@
-import UserDao from "../daos/mongodb/userDao.js";
+// import UserDao from "../daos/mongodb/userDao.js";
 import session from "express-session";
+import service from "../services/userServices.js";
 
-const userDao = new UserDao();
+const services = new service();
 
 export const registerUser = async (req, res) => {
   try {
-    const newUser = await userDao.registerUser(req.body);
+    const newUser = await services.register(req.body);
     console.log(req.body);
-    if (newUser) res.redirect("/users/login");
-    else res.redirect("/users/errorRegister");
+    if (newUser) res.redirect("api/users/login");
+    else res.redirect("/api/users/errorRegister");
   } catch (error) {
     console.log(error);
   }
@@ -17,10 +18,10 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { first_name, last_name, email, isGithub, age, password } = req.body;
-    const user = await userDao.loginUser(req.body);
+    const user = await services.login(req.body);
 
     if (user) {
-      // req.session.email = email;
+      // // req.session.email = email;
       // req.session.password = password;
       // req.session.isGithub = isGithub;
       // req.session.last_name = last_name;
@@ -34,7 +35,7 @@ export const loginUser = async (req, res) => {
         isGithub: isGithub,
         age: age,
       });
-    } else res.redirect("/users/errorLogin");
+    } else res.redirect("/api/users/errorLogin");
   } catch (error) {
     console.log(error);
   }
@@ -156,4 +157,75 @@ export const addProdToUserCart = async (req, res, next) => {
   } catch (error) {
     next(error.message);
   }
+};
+// token & password
+
+export const generateToken = (user, timeExp) => {
+  const payload = {
+    userId: user._id,
+  };
+  const token = jwt.sign(payload, config.SECRET_KEY_JWT, {
+    expiresIn: timeExp,
+  });
+  return token;
+};
+
+export const resetPass = async (email) => {
+  try {
+    const userExists = await UserService.getByEmail(email);
+    if (!userExists) return false;
+    else {
+      const token = generateToken(userExists, "60m");
+      return { userExists, token };
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updatePass = async (user, password) => {
+  try {
+    const isEqual = isValidPassword(password, user);
+    if (isEqual) return false;
+    const newPass = createHash(password);
+    return await this.update(user._id, { password: newPass });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateRole = async (uid) => {
+  try {
+    const user = await this.getById(uid);
+    if (!user) return false;
+    else {
+      if (user.role === "admin") return false;
+      if (user.role === "user")
+        return await this.update(uid, { role: "premium" });
+      else return await this.update(uid, { role: "user" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const removeById = async (req, res) => {
+  try {
+    const response = await services.removeById(req.params.uid);
+    if (!response) return createResponse(res, 400, "Unautorized");
+    else res.redirect(`/adminmenu`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const removeOld = async (req, res) => {
+  try {
+    const response = await services.removeOld();
+    if (!response) return createResponse(res, 400, "Unautorized");
+    return createResponse(
+      res,
+      200,
+      `${response.deletedCount} unused users deleted successfully`
+    );
+  } catch (error) {}
 };

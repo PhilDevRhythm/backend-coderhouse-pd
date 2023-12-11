@@ -1,6 +1,6 @@
-// import productDaoMongoDB from "../daos/mongodb/productDao.js";
+import productDaoMongoDB from "../daos/mongodb/productDao.js";
 
-// const productDao = new productDaoMongoDB();
+const productDao = new productDaoMongoDB();
 
 // export const getAll = async () => {
 //   try {
@@ -50,36 +50,36 @@
 //   }
 // };
 
-// export const getAllProdWithPages = async (page, limit) => {
-//   try {
-//     const response = await productDao.getAllProdWithPages(page, limit);
+export const getAllProdWithPages = async (page, limit) => {
+  try {
+    const response = await productDao.getAllProdWithPages(page, limit);
 
-//     const result = {
-//       status: "success",
-//       payload: response.docs,
-//       page: response.page,
-//       totalPages: response.totalPages,
-//       prevPage: response.prevPage,
-//       nextPage: response.nextPage,
-//       hasPrevPage: response.hasPrevPage,
-//       hasNextPage: response.hasNextPage,
-//       prevLink: response.hasPrevPage
-//         ? `http://localhost:8080/api/products?page=${response.prevPage}`
-//         : null,
-//       nextLink: response.hasNextPage
-//         ? `http://localhost:8080/api/products?page=${response.nextPage}`
-//         : null,
-//     };
+    const result = {
+      status: "success",
+      payload: response.docs,
+      page: response.page,
+      totalPages: response.totalPages,
+      prevPage: response.prevPage,
+      nextPage: response.nextPage,
+      hasPrevPage: response.hasPrevPage,
+      hasNextPage: response.hasNextPage,
+      prevLink: response.hasPrevPage
+        ? `http://localhost:8080/api/products?page=${response.prevPage}`
+        : null,
+      nextLink: response.hasNextPage
+        ? `http://localhost:8080/api/products?page=${response.nextPage}`
+        : null,
+    };
 
-//     return result;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 import Services from "./classServices.js";
 import factory from "../daos/mongodb/factory.js";
-const { prodDao } = factory;
+// const { prodDao } = factory;
 import ProductRepository from "../dtos/product/productRepo.js";
 const prodRepository = new ProductRepository();
 

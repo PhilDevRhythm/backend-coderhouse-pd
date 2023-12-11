@@ -17,7 +17,7 @@ import {
 
 router.get("/api/users/login", login);
 router.get("/api/users/register", register);
-router.get("/api/users/errorLogin", errorLogin);
+router.get("/errorLogin", errorLogin);
 router.get("/api/users/errorRegister", errorRegister);
 router.get("/api/users/profile", profile);
 router.get("/api/users/logout", logout);

@@ -1,25 +1,52 @@
 import { createTransport } from "nodemailer";
-import "dotenv/config";
+import config from "../../config.js";
 
-export const transporter = createTransport({
-  host: process.env.HOST,
-  port: process.env.PORTETHEREAL,
+const transporter = createTransport({
+  service: "gmail",
+  port: 465,
+  secure: true,
   auth: {
-    user: process.env.EMAIL,
-    password: process.env.PASSWORD,
+    user: config.EMAIL,
+    pass: config.PASSWORD,
   },
 });
 
-export const mailOptions = {
-  from: process.env.EMAIL,
-  to: process.env.EMAIL,
-  subject: "Testing mail -NODEJS",
-  text: "Testing mail BODY -NODEJS",
-  html: `<h1>Bienvenido</h1>`,
-  attachments: [
-    {
-      path: process.cwd() + "/src/services/adjunto.txt",
-      filename: `resumen-de-cuenta-${process.env.EMAIL}.txt`,
-    },
-  ],
+const createMsgRegister = (first_name) => {
+  return `<h1>Hola ${first_name}, Bienvenido</h1>`;
+};
+const createMsgReset = (first_name) => {
+  return `<h1>Hola ${first_name}, hace click <a href='http://localhost:8080/users/new-pass'>AQUI</a> para reestablecer la contraseña`;
+};
+export const sendMail = async (user, service, token = null) => {
+  try {
+    const { first_name, email } = user;
+    let msg = "";
+
+    service == "register"
+      ? (msg = createMsgRegister(first_name))
+      : service == "resetPass"
+      ? (msg = createMsgReset(first_name))
+      : (msg = "");
+
+    let subj = "";
+    subj =
+      service == "register"
+        ? "Bienvenido/a"
+        : service == "resetPass"
+        ? "Restablecer la contraseña"
+        : "";
+
+    const gmailOptions = {
+      from: config.EMAIL,
+      to: email,
+      subject: subj,
+      html: msg,
+    };
+
+    const response = await transporter.sendMail(gmailOptions);
+    if (token != null) return token;
+    console.log("Email enviado");
+  } catch (error) {
+    console.log("error en envio");
+  }
 };

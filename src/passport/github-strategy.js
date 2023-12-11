@@ -7,24 +7,25 @@ const userDao = new UserDao();
 const strategyOptions = {
   clientID: "Iv1.cac6b468dd768572",
   clientSecret: "341dfe25a4b3a2a5276c283da5599954e42ea8fd",
-  callbackURL: "http://localhost:8080/users/profile-github",
+  callbackURL:
+    "https://seemly-bat-production.up.railway.app/api/users/profile-github",
 };
 
 const registerOrLogin = async (accessToken, refreshToken, profile, done) => {
-  console.log("profile-->", profile);
+  // console.log("profile-->", profile);
   const email =
     profile._json.email !== null ? profile._json.email : profile._json.blog;
   const user = await userDao.getByEmail(email);
   if (user) return done(null, user);
-  const newUser = await userDao.registerUser({
+  const newUser = await userDao.register({
     first_name: profile._json.name.split(" ")[0],
     last_name: profile._json.name.split(" ")[1],
     isGitHub: true,
-    password:"*******",
-    email,
+    password: "*******",
+    email: profile._json.email,
   });
 
-  // res.redirect("/users/profile");
+  res.redirect("/users/profile");
   return done(null, newUser);
 };
 

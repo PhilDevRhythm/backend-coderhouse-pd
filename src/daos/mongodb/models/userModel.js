@@ -19,12 +19,14 @@ const userSchema = new Schema({
     required: true,
     default: 0,
   },
-  password: { type: String , required: true, default:""},
+  cartId: { type: Schema.Types.ObjectId, ref: "carts" },
+  password: { type: String, required: true, default: "" },
   role: {
     type: String,
     default: "user",
   },
   isGitHub: { type: Boolean, required: true, default: false },
+  last_connection: { type: Date },
 });
 
 export const userModel = model("users", userSchema);

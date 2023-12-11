@@ -1,4 +1,4 @@
-import Services from "./class.services.js";
+import Services from "./classServices.js";
 import pkg from "jsonwebtoken";
 const { sign } = pkg;
 import "dotenv/config";
@@ -26,6 +26,27 @@ export default class UserService extends Services {
       console.log(error);
     }
   }
+  async removeOld(user) {
+    try {
+      return await userDao.removeOld(user);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async getByEmail(user) {
+    try {
+      return await userDao.getByEmail(user);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async remove(user) {
+    try {
+      return await userDao.removeById(user);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async login(user) {
     try {
@@ -47,5 +68,3 @@ export default class UserService extends Services {
     }
   }
 }
-
-
